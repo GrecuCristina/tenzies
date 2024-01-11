@@ -8,7 +8,8 @@ export default function App() {
   const [dice, setDice] = React.useState(allNewDice);
   const [tenzies, setTenzies] = React.useState(false);
   const { width, height } = useWindowSize();
-
+  const [startTime, setStartTime] = React.useState(Date.now());
+  const [currTime, setCurrTime] = React.useState();
   React.useEffect(() => {
     console.log("Dice state changed");
     let won = true;
@@ -22,15 +23,29 @@ export default function App() {
     }
     if (won) {
       setTenzies(true);
-      console.log("You won!");
+      const currentTime = Date.now() - startTime;
+
+      if (!localStorage.getItem("bestTime")) {
+        localStorage.setItem("bestTime", JSON.stringify(currentTime));
+      } else if (JSON.parse(localStorage.getItem("bestTime")) > currentTime) {
+        localStorage.setItem("bestTime", JSON.stringify(currentTime));
+      }
+      setCurrTime(currentTime);
     }
   }, [dice]);
 
+  function logWinningTime(time, message) {
+    let seconds = time / 1000;
+    const minutes = Math.floor(seconds / 60);
+    seconds = (seconds - minutes * 60).toFixed(2);
+    return `${message} ${minutes} min ${seconds} sec`;
+  }
   function allNewDice() {
     const randomNumbers = [];
     for (let i = 0; i < 10; i++) {
       randomNumbers.push({
-        value: Math.floor(Math.random() * 6) + 1,
+        // value: Math.floor(Math.random() * 6) + 1,
+        value: 6,
         isHeld: false,
         id: nanoid(),
       });
@@ -40,6 +55,7 @@ export default function App() {
 
   function rollDice() {
     if (tenzies) {
+      setStartTime(Date.now());
       setTenzies(false);
       setDice(allNewDice);
       return;
@@ -91,6 +107,19 @@ export default function App() {
       <button className="roll-btn" onClick={rollDice}>
         {tenzies ? "New Game" : "Roll"}
       </button>
+      <div className="time">
+        <div className="best-time">
+          {logWinningTime(
+            JSON.parse(localStorage.getItem("bestTime")),
+            "Best Time : "
+          )}
+        </div>
+        {tenzies && (
+          <div className="current-time">
+            {logWinningTime(currTime, "You won in :")}
+          </div>
+        )}
+      </div>
     </main>
   );
 }

@@ -81,3 +81,22 @@ main {
   text-align: center;
   /* max-width: 400px; */
 }
+.time {
+  display: flex;
+  gap: 10px;
+}
+.best-time,
+.current-time {
+  color: #ffffff;
+  font-family: "Karla";
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  background-color: #5035ff;
+  border-radius: 4px;
+  border: 0;
+  padding: 10px 25px;
+}
+.best-time {
+  background-color: #59e391;
+}
