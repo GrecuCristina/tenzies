@@ -44,8 +44,8 @@ export default function App() {
     const randomNumbers = [];
     for (let i = 0; i < 10; i++) {
       randomNumbers.push({
-        // value: Math.floor(Math.random() * 6) + 1,
-        value: 6,
+        value: Math.floor(Math.random() * 6) + 1,
+        // value: 6,
         isHeld: false,
         id: nanoid(),
       });

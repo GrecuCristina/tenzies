@@ -87,15 +87,16 @@ main {
 }
 .best-time,
 .current-time {
+  margin-top: 10px;
   color: #ffffff;
   font-family: "Karla";
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   background-color: #5035ff;
   border-radius: 4px;
   border: 0;
-  padding: 10px 25px;
+  padding: 10px 20px;
 }
 .best-time {
   background-color: #59e391;
